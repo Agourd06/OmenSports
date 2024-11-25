@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User as UserModel } from './users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+
+
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(@InjectModel(UserModel.name) private userModel: Model<UserModel>) {}
+
+  async createUser(data: CreateUserDto): Promise<UserModel> {
+    const user = new this.userModel(data);
+    return user.save();
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(): Promise<UserModel[]> {
+    return this.userModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string): Promise<UserModel> {
+    return this.userModel.findById(id).populate('User').populate('Channel').exec();
+  }
+  
+
+  async updateUser(id: string, data: UpdateUserDto): Promise<UserModel> {
+    return this.userModel.findByIdAndUpdate(id, data, { new: true }).exec();
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async deleteUser(id: string): Promise<UserModel> {
+    return this.userModel.findByIdAndDelete(id).exec();
   }
 }
