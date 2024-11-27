@@ -17,7 +17,7 @@ import { User } from 'src/users/users.schema';
       private jwtService: JwtService,
       @InjectModel(User.name) private userModel: Model<User>
     ) { }
-  
+
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
       const token = this.extractTokenFromHeader(request);
@@ -29,9 +29,8 @@ import { User } from 'src/users/users.schema';
       try {
         const payload = await this.jwtService.verifyAsync(token);
   
-        // Validate user exists in database
         const user = await this.userModel.findById(payload.id)
-          .select('-password') // Here i Exclude password from the returned user object
+          .select('-password') 
           .exec();
   
   
@@ -42,7 +41,6 @@ import { User } from 'src/users/users.schema';
   
      
   
-        // Add user info to request so u can access it from controller and services
         request.user = user;
         request.userId = user._id;
   

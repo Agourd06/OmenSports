@@ -1,26 +1,27 @@
-import { IsString, IsEmail, IsOptional, IsArray, IsNotEmpty } from 'class-validator';
-import { Types } from 'mongoose';
+import { IsString, IsEmail, IsOptional, IsEnum, IsNotEmpty } from 'class-validator';
+import { UserRole } from 'src/common/enums/users.enum';
 
 export class CreateUserDto {
-
   @IsString()
-  @IsNotEmpty()  
+  @IsNotEmpty()
   readonly username: string;
 
   @IsEmail()
-  @IsNotEmpty()  
+  @IsNotEmpty()
   readonly email: string;
 
   @IsString()
   readonly password: string;
 
-  @IsArray()
-  @IsOptional() 
-  readonly friends?: Types.ObjectId[];
+  @IsString()
+  @IsNotEmpty()
+  readonly phone: string;
 
-  @IsArray()
-  @IsOptional() 
-  readonly channels?: Types.ObjectId[];
+  @IsString()
+  @IsNotEmpty()
+  readonly adress: string;
 
-  readonly score: number;
+  @IsEnum(UserRole)
+  @IsOptional() 
+  readonly role?: UserRole;
 }

@@ -1,8 +1,9 @@
-import { IsString, IsEmail, IsOptional, IsArray } from 'class-validator';
+import { IsString, IsOptional, Matches, IsEmail, IsEnum } from 'class-validator';
+import { UserRole } from 'src/common/enums/users.enum';
 
 export class UpdateUserDto {
   @IsString()
-  @IsOptional() 
+  @IsOptional()
   readonly username?: string;
 
   @IsEmail()
@@ -13,14 +14,15 @@ export class UpdateUserDto {
   @IsOptional()
   readonly password?: string;
 
-  @IsArray()
+  @IsString()
   @IsOptional()
-  readonly friends?: string[];
-  
-  @IsArray()
-  @IsOptional() 
-  readonly channels?: string[];
+  readonly phone?: string;
 
+  @IsString()
   @IsOptional()
-  readonly score?: number;
+  readonly adress?: string;
+
+  @IsEnum(UserRole)
+  @IsOptional()
+  readonly role?: UserRole;
 }
