@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchData } from '../fetcher/FetchData';
-import Input from '../components/inputs/Input';
 import { validateField } from '../validation/AuthValidation';
+import Input from '../components/inputs/inputs';
 
 export default function Auth() {
     const [formData, setFormData] = useState({
@@ -57,35 +57,64 @@ export default function Auth() {
     };
 
     return (
-        <div className='border bg-black shadow-[#EEBB07] rounded-lg p-6 max-w-md shadow-md border-[#EEBB07] max-md:mx-auto'>
-            <form >
-                <div className='w-full flex justify-center'>
-                    <img src='/logo.png' className='w-40 h-40' />
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-800 via-gray-900 to-black p-4">
+        <div className="bg-gray-800 shadow-lg rounded-lg p-8 max-w-sm w-full border border-gray-700">
+            <form>
+                <div className="w-full flex justify-center mb-6">
+                        <h1 className='text-2xl text-white font-mono'>OmenSports</h1>
                 </div>
-                <h3 className="text-white text-3xl font-extrabold mb-8">
-                    Sign in
-                </h3>
+                <h3 className="text-white text-2xl font-bold text-center mb-6">Sign In</h3>
+                
+                {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+    
+                <div className="space-y-4">
+                    <Input
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 rounded-md bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    />
+                    <Input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 rounded-md bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    />
+                </div>
 
-                {error && <p className='text-red-600'>{error}</p>}
-                <Input type='text' name='email' placeholder='Email' onChange={handleChange} />
-                <Input type='password' name='password' placeholder='Password' onChange={handleChange} />
-                <div className='pt-1'>
-                    <button type='button' onClick={() => { setForm('forgot') }}
-                        className="text-[#EEBB07] font-semibold hover:underline ml-1 whitespace-nowrap">Forget Password ?</button>
-                </div>
-                <div className="text-center">
-                    <p className="text-sm mt-4 text-white">Don't have an account ? <button type='button' onClick={() => { setForm('register') }}
-                        className="text-[#EEBB07] font-semibold hover:underline ml-1 whitespace-nowrap">Register here</button></p>
-                </div>
-                <div className='flex justify-center mt-3'>
-                    <button onClick={handleSubmit}
-                        className="h-fit text-white w-fit px-[1em] py-[0.25em] hover:text-[#EEBB07] border-[1px] border-gray-700 rounded-full flex justify-center items-center gap-[0.5em] overflow-hidden group hover:translate-y-[0.125em] duration-300 backdrop-blur-[12px]"
-                    >
-                        <p className='duration-300'>Login</p>
-                        <i className='bx bxs-log-in-circle  group-hover:translate-x-[10%] duration-300' ></i>
+                <div className="text-right mt-2">
+                    <button
+                        type="button"
+                        onClick={() => setForm('forgot')}
+                        className="text-yellow-500 text-sm hover:underline">
+                        Forgot Password?
                     </button>
+                </div>
+    
+                <button
+                    onClick={handleSubmit}
+                    className="w-full mt-6 py-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600 transition-all duration-300"
+                >
+                    Login
+                </button>
+    
+                <div className="text-center mt-4">
+                    <p className="text-sm text-gray-400">
+                        Don't have an account?{" "}
+                        <button
+                            type="button"
+                            onClick={() => setForm('register')}
+                            className="text-yellow-500 font-semibold hover:underline"
+                        >
+                            Register here
+                        </button>
+                    </p>
                 </div>
             </form>
         </div>
+    </div>
+    
     );
 }
