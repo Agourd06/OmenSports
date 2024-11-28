@@ -28,12 +28,27 @@ export class EventsService {
   }
 
   async findAll(): Promise<Event[]> {
-    return this.eventModel.find().exec();
+    return this.eventModel
+      .find()
+      .populate({
+        path: 'users',
+        model: 'User', 
+        select: 'username email', 
+      })
+      .exec();
   }
-
+  
   async findOne(id: string): Promise<Event> {
-    return this.eventModel.findById(id).exec();
+    return this.eventModel
+      .findById(id)
+      .populate({
+        path: 'users',
+        model: 'User', 
+        select: 'username email',
+      })
+      .exec();
   }
+  
 
   async updateEvent(id: string, data: UpdateEventDto): Promise<Event> {
     return this.eventModel.findByIdAndUpdate(id, data, { new: true }).exec();
