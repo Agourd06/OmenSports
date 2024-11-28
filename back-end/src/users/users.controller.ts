@@ -1,18 +1,27 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, BadRequestException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)  
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UsersService) {}
 
-  @Post()
-  async createUser(@Body() data: CreateUserDto): Promise<User> {
-    return this.userService.createUser(data);
+  @Post(':eventId')
+  async createUser(
+    @Param('eventId') eventId: string,
+    @Body() data: CreateUserDto,
+  ): Promise<User> {
+    if (!eventId) {
+      throw new BadRequestException('Event ID is required');
+    }
+    return this.userService.createUser(data, eventId);
   }
 
+  
   @Get()
   async findAll(): Promise<User[]> {
     return this.userService.findAll();
