@@ -17,7 +17,7 @@ export class UsersService {
     private eventService: EventsService, 
   ) {}
 
-  async createUser(data: CreateUserDto, eventId: string): Promise<UserModel> {
+  async createUser(data: CreateUserDto, eventId: string) : Promise<UserModel> {
     const existingUser = await this.userModel.findOne({ email: data.email }).exec();
     if (existingUser) {
       throw new BadRequestException('Email already in use');
