@@ -16,6 +16,8 @@ export default function EventCards() {
             setLoading(true);
             try {
                 const response = await fetchData('events', 'GET', token);
+                console.log(response);
+                
                 setEvents(response);
             } catch (error) {
                 Alert('error', error.message);

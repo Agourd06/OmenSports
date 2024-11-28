@@ -1,11 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import * as bcrypt from 'bcrypt';
 import { UserRole } from 'src/common/enums/users.enum';
-
-
-
-@Schema({ timestamps: true })
+@Schema({ collection: 'users', timestamps: true })
 export class User extends Document {
   @Prop({ required: true })
   username: string;
@@ -18,20 +14,15 @@ export class User extends Document {
 
   @Prop({ required: true })
   phone: string;
-  
-  @Prop({ required : true})
-  adress : string
+
+  @Prop({ required: true })
+  adress: string;
 
   @Prop({ required: true, enum: UserRole, default: UserRole.PARTICIPANT })
   role: UserRole;
-  
+
+  _id: Types.ObjectId;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.pre('save', async function(next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10); 
-  }
-  next();
-});

@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -17,19 +18,24 @@ export class UsersService {
     private eventService: EventsService, 
   ) {}
 
-  async createUser(data: CreateUserDto, eventId: string) : Promise<UserModel> {
+  async createUser(data: CreateUserDto, eventId: string): Promise<UserModel> {
     const existingUser = await this.userModel.findOne({ email: data.email }).exec();
     if (existingUser) {
       throw new BadRequestException('Email already in use');
     }
-
-    const user = new this.userModel(data);
-    const savedUser = await user.save();
-    await this.eventService.addUserToEvent(eventId, savedUser._id);
-
-    return savedUser; 
+  
+    const newUser = new this.userModel(data);
+    await newUser.save();
+  
+    const event = await this.eventService.findOne(eventId);
+    if (!event) {
+      throw new BadRequestException('Event not found');
+    }
+    event.users.push(newUser._id);
+     await event.save(); 
+    return newUser;
   }
-
+  
   async findAll(): Promise<UserModel[]> {
     return await this.userModel.find().exec();
   }
