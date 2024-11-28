@@ -10,7 +10,7 @@ export default function Dashboard() {
         <div className="relative bg-gradient-to-r from-gray-800 via-gray-900 to-black min-h-screen">
             <SideBar />
             <div
-                className={`transition-all duration-500 p-6 ${
+                className={`transition-all duration-500 px-12 py-6 ${
                     isSideBarVisible ? 'ml-[250px] xl:w-[calc(100%-250px)]' : 'ml-0 xl:w-full'
                 }`}
             >
