@@ -1,6 +1,7 @@
 import { config } from "../config";
 
 export async function fetchData(endPoint, method = 'GET', token, body = null, isFormData = false) {
+    
     try {
         const headers = {
             ...(token && { 'Authorization': `Bearer ${token}` }),

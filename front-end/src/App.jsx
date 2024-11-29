@@ -15,7 +15,7 @@ export default function App() {
   }
   CheckForConnection()
   return (
-    <div >
+    <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black" >
 
       <AlertContext.Provider value={handleShowAlert}>
         <AuthProvider>

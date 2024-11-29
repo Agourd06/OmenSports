@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import mongoose, { Model, Types } from 'mongoose';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Event } from './events.schema';
@@ -57,4 +57,15 @@ export class EventsService {
   async removeEvent(id: string): Promise<Event> {
     return this.eventModel.findByIdAndDelete(id).exec();
   }
+
+  async removeUserFromEvent(userId : string , eventId : string){
+console.log(userId,eventId)
+    const x =  await this.eventModel.findByIdAndUpdate(
+      eventId,
+      { $pull: { users: new mongoose.Types.ObjectId(userId) } },
+      { new: true } 
+    ); 
+    console.log(x)
+    return x
+   }
 }

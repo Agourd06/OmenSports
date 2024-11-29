@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Put,
+} from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { AuthGuard } from 'src/auth/auth.guard'; 
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('events')
-@UseGuards(AuthGuard)  
+@UseGuards(AuthGuard)
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
@@ -27,6 +37,14 @@ export class EventsController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() data: UpdateEventDto) {
     return this.eventsService.updateEvent(id, data);
+  }
+
+  @Delete(':eventId/users/:userId')
+  async removeUserFromEvent(
+    @Param('userId') userId: string,
+    @Param('eventId') eventId: string,
+  ) {
+    this.eventsService.removeUserFromEvent(userId,eventId)
   }
 
   @Delete(':id')

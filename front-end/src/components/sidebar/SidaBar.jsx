@@ -9,31 +9,32 @@ export default function SideBar() {
         <>
             <button
                 onClick={toggleSideBar}
-                className={`fixed top-1/2 left-2 transform -translate-y-1/2 z-50 bg-[#EEBB07] hover:bg-[#e0a806] text-darker font-bold rounded-full shadow-lg p-3 transition-all ${
-                    isSideBarVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                }`}
+                className={`fixed top-1/2 left-2 transform -translate-y-1/2 z-50 bg-[#EEBB07] hover:bg-[#e0a806] text-darker font-bold rounded-full shadow-lg p-3 transition-all ${isSideBarVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                    }`}
             >
+                
             </button>
 
             <nav
-                className={`bg-darker shadow-xl shadow-white/10 h-screen fixed top-0 left-0 min-w-[250px] py-6 px-4 font-sans overflow-auto rounded-r-3xl z-40 transition-transform duration-500 ${
-                    isSideBarVisible ? 'translate-x-0' : '-translate-x-full'
-                }`}
-            >
+    className={`bg-darker shadow-xl shadow-white/10 h-screen fixed top-0 left-0 lg:min-w-[250px] w-[75%] sm:w-[60%] md:w-[250px] py-6 px-4 font-sans overflow-auto rounded-r-3xl z-40 transition-transform duration-500 ${
+        isSideBarVisible ? 'translate-x-0' : '-translate-x-full'
+    }`}
+>
+
+
                 <div className="flex flex-col h-full">
                     <div className="flex items-center mb-6">
-                        <img src="/logo.png" alt="Logo" className="w-10 h-10" />
-                        <div className="ml-4" >
-                            <p className="text-lg text-text font-semibold">
-                                CineStar <span className="text-xs text-[#EEBB07]">Admin</span>
+                        <div className="ml-4 flex gap-5" >
+                            <p className="text-lg text-gray-300 text-text font-semibold">
+                                OmenSports <span className="text-xs text-[#EEBB07]">Admin</span>
                             </p>
-                        </div>
                         <button onClick={toggleSideBar}
-                            
+
                             className="ml-auto text-white text-3xl cursor-pointer hover:text-[#EEBB07] transition-all "
                         >
                             <i className="bx bx-chevron-left"></i>
                         </button>
+                        </div>
                     </div>
 
                     <hr className="my-6 border-[#EEBB07]" />
