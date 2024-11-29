@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { UserRole } from 'src/common/enums/users.enum';
+import { UserRole } from '../common/enums/users.enum';
 import * as bcrypt from 'bcrypt';
 
 @Schema({ collection: 'users', timestamps: true })

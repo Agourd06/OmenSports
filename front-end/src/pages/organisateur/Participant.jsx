@@ -21,7 +21,7 @@ export default function Participant() {
             setLoading(true);
             try {
                 const response = await fetchData('users', 'GET', token);
-                setUsers((prevUsers) => [...prevUsers, ...response]);
+                setUsers(response);
             } catch (error) {
                 Alert('error', error.message);
             } finally {

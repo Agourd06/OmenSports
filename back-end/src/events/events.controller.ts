@@ -12,7 +12,7 @@ import {
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('events')
 // @UseGuards(AuthGuard)
@@ -55,7 +55,7 @@ export class EventsController {
     @Param('userId') userId: string,
     @Param('eventId') eventId: string,
   ) {
-    this.eventsService.removeUserFromEvent(userId, eventId);
+    return this.eventsService.removeUserFromEvent(userId, eventId);
   }
 
   @Delete(':id')

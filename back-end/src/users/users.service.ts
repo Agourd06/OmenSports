@@ -9,7 +9,7 @@ import { Model, Types } from 'mongoose';
 import { User as UserModel } from './users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { EventsService } from 'src/events/events.service';
+import { EventsService } from '../events/events.service';
 
 @Injectable()
 export class UsersService {
