@@ -1,7 +1,6 @@
 import { config } from "../config";
 
 export async function fetchData(endPoint, method = 'GET', token, body = null, isFormData = false) {
-    
     try {
         const headers = {
             ...(token && { 'Authorization': `Bearer ${token}` }),
@@ -20,12 +19,13 @@ export async function fetchData(endPoint, method = 'GET', token, body = null, is
         const response = await fetch(`${config.API_URL}${endPoint}`, fetchOptions);
       
         if (!response.ok) {
-            const errorResponse = await response.json();
-            throw new Error(errorResponse.message || 'Problem in response, please try again');
+            const errorResponse = await response.text();
+            const errorMessage = errorResponse || 'Problem in response, please try again';
+            throw new Error(errorMessage);
         }
 
-        const responseData = await response.json();
-        return responseData;
+        const responseData = await response.text();
+        return responseData ? JSON.parse(responseData) : {};  
 
     } catch (error) {
         console.error('Fetch Error:', error);

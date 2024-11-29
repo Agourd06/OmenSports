@@ -24,5 +24,5 @@ export class CreateUserDto {
 
   @IsEnum(UserRole)
   @IsOptional() 
-  readonly role?: UserRole;
+  readonly role: UserRole;
 }

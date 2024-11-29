@@ -17,15 +17,23 @@ export class EventsService {
   }
 
 
-  async addUserToEvent(eventId: string, userId: any): Promise<void> {
+  async addUserToEvent(eventId: string, userId: string) {
     const event = await this.eventModel.findById(eventId).exec();
     if (!event) {
       throw new BadRequestException('Event not found');
     }
-
-    event.users.push(userId);
-    await event.save();
+  
+    event.users.push(userId); 
+    await event.save(); 
+  
+    const updatedEvent = await this.eventModel
+      .findById(eventId)
+      .populate('users', 'username email') 
+      .exec();
+  
+    return updatedEvent;
   }
+  
 
   async findAll(): Promise<Event[]> {
     return this.eventModel
@@ -68,4 +76,6 @@ console.log(userId,eventId)
     console.log(x)
     return x
    }
+
+   
 }

@@ -15,7 +15,7 @@ import { UpdateEventDto } from './dto/update-event.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('events')
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
@@ -23,6 +23,17 @@ export class EventsController {
   async create(@Body() data: CreateEventDto) {
     return this.eventsService.createEvent(data);
   }
+
+  @Post(':eventId/users/:userId')
+  async addUserToEvent(
+    @Param('userId') userId: string,
+    @Param('eventId') eventId: string,
+  ) {
+    const updatedEvent = await this.eventsService.addUserToEvent(eventId, userId);
+    return updatedEvent; 
+  }
+  
+  
 
   @Get()
   async findAll() {
@@ -44,7 +55,7 @@ export class EventsController {
     @Param('userId') userId: string,
     @Param('eventId') eventId: string,
   ) {
-    this.eventsService.removeUserFromEvent(userId,eventId)
+    this.eventsService.removeUserFromEvent(userId, eventId);
   }
 
   @Delete(':id')

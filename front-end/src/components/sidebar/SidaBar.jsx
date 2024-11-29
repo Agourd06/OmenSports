@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import SideBarContext from '../../contexts/SideBarContext';
+import AuthContext from '../../contexts/AuthContext';
 
 export default function SideBar() {
     const { toggleSideBar, isSideBarVisible } = useContext(SideBarContext);
-
+const { logout } = useContext(AuthContext)
     return (
         <>
             <button
@@ -39,11 +40,10 @@ export default function SideBar() {
 
                     <hr className="my-6 border-[#EEBB07]" />
 
-                    {/* Menu Links */}
                     <ul className="space-y-4 px-2">
                         <li>
                             <Link
-                                to="/events"
+                                to="/admin"
                                 className="text-gray-300 text-sm flex items-center hover:text-[#EEBB07] transition-all"
                             >
                                 <i className="bx bx-calendar-event mr-4 text-xl"></i>
@@ -63,8 +63,7 @@ export default function SideBar() {
 
                     <hr className="my-6 border-[#EEBB07]" />
 
-                    {/* Logout */}
-                    <button
+                    <button onClick={logout}
                         className="text-sm text-gray-300 flex items-center hover:text-red-500 transition-all px-2 mt-auto"
                     >
                         <i className="bx bx-log-out mr-4 text-xl"></i>

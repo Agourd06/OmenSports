@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User as UserModel } from './users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -31,14 +31,28 @@ export class UsersService {
     if (!event) {
       throw new BadRequestException('Event not found');
     }
-    event.users.push(newUser._id);
-     await event.save(); 
+  console.log(event.users)
+
+  const userId = newUser._id?.toString()
+  console.log(userId)
+
+
+  event.users.push(userId);  
+  await event.save();
+  console.log(event.users)
+  
     return newUser;
   }
   
+  
   async findAll(): Promise<UserModel[]> {
-    return await this.userModel.find().exec();
-  }
+    try {
+        return await this.userModel.find({ role: 'participant' }).exec();
+    } catch (error) {
+        console.error('Error fetching participants:', error);
+        throw new Error('Could not fetch participants');
+    }
+}
 
   async findOne(id: string): Promise<UserModel> {
     const user = await this.userModel.findById(id).exec();

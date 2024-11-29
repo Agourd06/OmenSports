@@ -16,9 +16,9 @@ export class Event extends Document {
   @Prop({ required: true })
   location: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
-  users: Types.ObjectId[];
+  @Prop({ type: [{ type: String, ref: 'User' }] })
+  users: String[];
   
 }
-
+ 
 export const EventSchema = SchemaFactory.createForClass(Event);

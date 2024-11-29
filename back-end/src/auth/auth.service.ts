@@ -25,7 +25,6 @@ export class AuthService {
   async signup(signupData: SignupDto) {
 
 
-    console.log(signupData)
     const { email, password, username, role,phone , adress } = signupData;
 
     const emailIsExisting = await this.userModel.findOne({ email });
@@ -55,9 +54,9 @@ export class AuthService {
 
   async login(loginData: LoginDto) {
     const { email, password } = loginData;
-
+    
     const user = await this.userModel.findOne({ email });
-
+    
     if (!user) {
       throw new UnauthorizedException('Wrong Credentials');
     }
@@ -69,6 +68,8 @@ export class AuthService {
     }
 
     const tokens = await this.generateUserTokens(user);
+    
+    
     return {
       ...tokens,
       user: user,
