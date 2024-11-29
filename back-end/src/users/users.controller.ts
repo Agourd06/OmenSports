@@ -3,9 +3,9 @@ import { UsersService } from './users.service';
 import { User } from './users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
-@UseGuards(AuthGuard)  
+// @UseGuards(AuthGuard)  
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UsersService) {}
